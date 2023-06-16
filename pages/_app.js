@@ -1,7 +1,13 @@
 import '../styles/globals.css'
+import { QuioscoProvider } from '../context/QuioscoProvider';
 
 function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+  return (
+    <QuioscoProvider>
+      <Component {...pageProps} />
+    </QuioscoProvider>
+  );
 }
 
-export default MyApp
+export default MyApp;
+// este _app.js actua similar al context

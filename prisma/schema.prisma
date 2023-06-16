@@ -1,0 +1,45 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// npx prisma migrate reset - resetea la data de las migraciones pero deja las tabla
+// npx prisma studio puedes abrir una ventana en la cual puedes visualizar los datos
+// con el autoincremente ristra el primer dato como 1,2,3
+// el campo opcional se genera con ?
+// prisma tiene una seria de helpers que se denominan con @Id etc...
+// categoria es la relación y se relaciona con el modelo de Categoria
+// categoriaid es la llave primaria
+model Producto {
+  id          Int       @id @default(autoincrement())
+  nombre      String
+  precio      Float
+  imagen      String?
+  categoria   Categoria @relation(fields: [categoriaId], references: [id])
+  categoriaId Int
+}
+
+model Categoria {
+  id        Int        @id @default(autoincrement())
+  nombre    String
+  icono     String
+  productos Producto[]
+}
+
+// le decimos que van a ser multiples datos con el [] muchos producto en una cate
+
+model Orden {
+  id     Int     @id @default(autoincrement())
+  nombre String
+  fecha  String
+  total  Float
+  pedido Json
+  estado Boolean @default(false)
+}
